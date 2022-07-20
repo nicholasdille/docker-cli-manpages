@@ -25,9 +25,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
         run: |
-          docker build . \
-              --target local \
-              --output type=local,dest=.; \
+          docker build . --output type=local,dest=.; \
           tar -czf docker-cli-manpages.tar.gz bin share
 
       - name: Store tarball
