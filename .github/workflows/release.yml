@@ -1,0 +1,75 @@
+name: build-static
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          docker build . \
+              --target local \
+              --output type=local,dest=.; \
+          tar -czf docker-cli-manpages.tar.gz bin share
+
+      - name: Store tarball
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-cli-manpages.tar.gz
+          path: docker-cli-manpages.tar.gz
+
+  release:
+    if: github.event_name != 'pull_request'
+    needs:
+    - build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+    
+      - uses: actions/download-artifact@v3  
+
+      - name: Get version
+        id: get_version
+        run: |
+          version="$(cat Dockerfile | grep "ARG DOCKER_VERSION=" | sed -E 's/ARG DOCKER_VERSION=//')"
+          echo "::set-output name=version::${version}"
+
+      - name: Debug
+        run: |
+          pwd
+          find . -type f
+
+      - name: Create release
+        id: create_release
+        if: github.event_name != 'pull_request'
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          allowUpdates: true
+          name: "docker-cli-manpages ${{ steps.get_version.outputs.version }}"
+          tag: v${{ steps.get_version.outputs.version }}
+          draft: false
+          omitBody: true
+          prerelease: false
+          replacesArtifacts: true
+          artifacts: "docker-cli-manpages.tar.gz/docker-cli-manpages.tar.gz"
