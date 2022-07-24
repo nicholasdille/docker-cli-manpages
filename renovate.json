@@ -10,11 +10,7 @@
     ":automergePatch",
     ":semanticCommits"
   ],
-
-  "enabledManagers": [
-    "regex"
-  ],
-
+  
   "major": {
     "labels": ["type/renovate", "bump/major"]
   },
