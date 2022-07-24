@@ -1,3 +1,5 @@
+#syntax=docker/dockerfile:1.4.0
+
 FROM golang:1.18.3 AS build
 # renovate: datasource=github-tas depName=docker/cli versioning=regex:^(?<major>1?)\.(?<minor>\\d+?)\.(?<patch>\d+?)
 ARG DOCKER_VERSION=20.10.17
