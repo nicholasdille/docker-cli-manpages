@@ -1,4 +1,4 @@
-#syntax=docker/dockerfile:1.4.2
+#syntax=docker/dockerfile:1.4.3
 
 FROM golang:1.19.0@sha256:d3f734e1f46ec36da8c1bce67cd48536138085289e24cfc8765f483c401b7d96 AS build
 # renovate: datasource=github-tas depName=docker/cli versioning=regex:^(?<major>1?)\.(?<minor>\\d+?)\.(?<patch>\d+?)
