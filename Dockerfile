@@ -1,7 +1,7 @@
 #syntax=docker/dockerfile:1.4.3
 
 FROM golang:1.19.1@sha256:4c8f4b8402a868dc6fb3902c97032b971d0179fbe007be408b455697e98d194a AS build
-# renovate: datasource=github-tas depName=docker/cli versioning=regex:^(?<major>1?)\.(?<minor>\\d+?)\.(?<patch>\d+?)
+# renovate: datasource=github-tags depName=docker/cli versioning=regex:^(?<major>1?)\.(?<minor>\\d+?)\.(?<patch>\d+?)
 ARG DOCKER_VERSION=20.10.17
 WORKDIR /go/src/github.com/docker/cli
 RUN git clone -q --config advice.detachedHead=false --depth 1 --branch "v${DOCKER_VERSION}" https://github.com/docker/cli .
