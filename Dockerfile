@@ -1,6 +1,6 @@
 #syntax=docker/dockerfile:1.4.3
 
-FROM golang:1.19.3@sha256:241ae1a3d3c67a7285010eae710adaf58b7f6c54864155a389ea4229ce67a9ee AS build
+FROM golang:1.19.3@sha256:dc76ef03e54c34a00dcdca81e55c242d24b34d231637776c4bb5c1a8e8514253 AS build
 # renovate: datasource=github-tags depName=docker/cli
 ARG DOCKER_VERSION=20.10.21
 WORKDIR /go/src/github.com/docker/cli
