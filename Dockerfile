@@ -2,7 +2,7 @@
 
 FROM golang:1.20.2@sha256:f7099345b8e4a93c62dc5102e7eb19a9cdbad12e7e322644eeaba355d70e616d AS build
 # renovate: datasource=github-tags depName=docker/cli
-ARG DOCKER_VERSION=20.10.23
+ARG DOCKER_VERSION=20.10.24
 WORKDIR /go/src/github.com/docker/cli
 RUN git clone -q --config advice.detachedHead=false --depth 1 --branch "v${DOCKER_VERSION}" https://github.com/docker/cli .
 ENV GO111MODULE=auto \
